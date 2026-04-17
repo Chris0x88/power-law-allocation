@@ -253,4 +253,5 @@ The model is only useful if you run it honestly. In practice that means:
 - [REBALANCER.md](REBALANCER.md) — rebalancing policy and threshold research
 - [BACKTEST.md](BACKTEST.md) — performance across fee regimes and windows
 - [VENUES.md](VENUES.md) — where to execute the strategy in practice
-- [papers/heartbeat_v3.2.md](../papers/heartbeat_v3.2.md) — the formal paper
+- [papers/thermal_stability.md](../papers/thermal_stability.md) — the formal working paper
+- [papers/heartbeat_v3.2_paper.md](../papers/heartbeat_v3.2_paper.md) — earlier internal paper

@@ -119,7 +119,9 @@ power-law-allocation/
 │   └── index.html           ← Interactive Plotly chart (open in any browser)
 │
 └── papers/
-    └── (research papers in markdown and PDF)
+    ├── thermal_stability.md     ← The formal working paper (v2.0, peer-review quality)
+    ├── heartbeat_v3_paper.md    ← Earlier internal paper (V3 development)
+    └── heartbeat_v3.2_paper.md  ← Earlier internal paper (V3.2 refinement)
 ```
 
 ---
