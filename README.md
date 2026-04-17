@@ -174,6 +174,76 @@ A single signal call returns everything a bot or UI needs:
 
 ---
 
+## The intended use — a savings-wallet worldview
+
+**This is a worldview, not financial advice.** Nothing in this repo is a
+recommendation to buy, sell, or hold any asset. What follows is a
+description of what the model is *designed for* — you decide whether that
+design matches your own view of the world.
+
+The model is built for a wallet that holds **both a USD-equivalent
+stablecoin and BTC**, and lets the power-law signal decide the mix. You
+contribute cash on whatever cadence works for you. The model sets the
+target allocation. The rebalancer executes. You never touch the trade
+button.
+
+In that usage pattern, the wallet behaves like a long-duration savings
+vehicle — the kind of thing a bank deposit account used to be, before
+real yields went negative. But with three deliberate differences:
+
+- **The store of value is BTC, not cash.** The worldview behind the model
+  is that fiat currencies debase over long horizons and Bitcoin, for now,
+  does not. If you don't share that view, the model is not for you.
+- **The allocation is dynamic, never 100%.** You don't sit fully in BTC
+  and ride out 80% drawdowns. When the model reads "euphoria," it cashes
+  you out into stablecoin automatically. When it reads "deep value," it
+  puts you back in. You get cycle-aware exposure without timing anything.
+- **Volatility is dampened by design.** A pure BTC holding has 80%+
+  historical max drawdowns. This strategy, in backtest, roughly halves
+  that — because the allocation shrinks before the crash and grows before
+  the recovery.
+
+### What the wallet removes from your life
+
+- **The urge to time the market.** The model runs on a schedule, not on
+  your mood. The answer to "should I be buying right now?" is whatever
+  the signal says, and you find out on the next tick.
+- **The fear of the exit.** You don't need to pick a top. The model
+  trims on the way up and fully de-risks at the ceiling. If you hate
+  missing the peak, this strategy will sometimes frustrate you. If you
+  hate round-tripping gains, it won't.
+- **The fear of the entry.** You don't need to pick a bottom. The model
+  accumulates mechanically as price approaches the floor, and the phase
+  penalty keeps you out during the post-peak washout.
+
+### What it does not do
+
+- **Guarantee a return.** There are no return guarantees in crypto, or
+  anywhere else.
+- **Protect against Bitcoin failing.** If the underlying thesis is wrong
+  and BTC goes to zero, the wallet goes with it.
+- **Replace professional advice.** If you are deciding what to do with
+  real money, talk to a real advisor. This repo is a research and
+  information system, not a fiduciary.
+
+### The savings-account framing
+
+The pattern this model supports is simple:
+
+> Hold a balanced USD/BTC wallet. Contribute to it when you have savings.
+> Let the model manage the split based on where Bitcoin sits relative to
+> its long-run structure. Withdraw when you need the money. Don't check
+> it more than once a week.
+
+That is the intended shape of the thing. Whether it makes sense for any
+given person depends on their views on Bitcoin, their tax jurisdiction,
+their time horizon, and their tolerance for a framework that will
+eventually be wrong (see [THESIS.md](docs/THESIS.md) on expected lifespan).
+
+None of those are questions this repo can answer for you.
+
+---
+
 ## How long this model lasts
 
 The power-law framework assumes Bitcoin is still in its volatile, cycle-
