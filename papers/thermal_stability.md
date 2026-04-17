@@ -1,48 +1,58 @@
 ---
-title: "Bitcoin's Journey Toward Thermal Stability: A Phenomenological Framework for Cycle-Aware Portfolio Allocation"
+title: |
+  Bitcoin's Journey Toward Thermal Stability
+subtitle: "A Phenomenological Framework for Cycle-Aware Portfolio Allocation"
 author: "Chris Imgraben"
-affiliation: "Independent researcher"
 date: "April 2026"
-version: "2.0"
-keywords: "Bitcoin, power law, portfolio allocation, rebalancing, Kleiber's Law, cycle analysis, cryptocurrency valuation"
+abstract: |
+  We present a deterministic, stateless framework for Bitcoin portfolio
+  allocation that requires only a calendar date and the current spot price
+  as inputs. The framework decomposes observed price into three layers: a
+  power-law equilibrium floor calibrated to the full post-genesis price
+  history; a speculative envelope whose amplitude decays geometrically
+  with successive halving epochs following a Kleiber-like three-quarter-
+  power scaling; and an intra-cycle heartbeat pulse modelled as a
+  boundary-pinned asymmetric Gaussian peaking at one-third of each
+  halving cycle. From these references we derive a position-in-band
+  score, a cycle-phase penalty, and a bounded allocation signal in
+  [0, 1]. On daily BTC/USD data from August 2011 through April 2026 the
+  framework captures approximately 95% of observations within its band
+  and, at a 22% allocation-deviation rebalancing threshold, produces a
+  strategy-to-HODL wealth ratio of 2.55x over the 2014--2026 window while
+  reducing maximum drawdown from -83% to approximately -50%. We stress
+  that the framework is phenomenological, not first-principles: the
+  physical and biological analogies are heuristic motivations for
+  functional form, not derivations. We forecast that the power-law
+  regime itself is time-limited and will transition to a logistic
+  (S-curve) regime as Bitcoin's market capitalisation approaches
+  planetary-scale boundaries such as the global monetary base or gold
+  market capitalisation, with the expected transition window of
+  2029--2035.
+bibliography: references.bib
+link-citations: true
+colorlinks: true
+linkcolor: NavyBlue
+citecolor: NavyBlue
+urlcolor: NavyBlue
+geometry: "margin=1in"
+fontsize: 11pt
+documentclass: article
+header-includes: |
+  \usepackage{lmodern}
+  \usepackage{microtype}
+  \usepackage{booktabs}
+  \usepackage{amsmath}
+  \usepackage{amssymb}
+  \setlength{\parskip}{0.5em}
+  \setlength{\parindent}{0pt}
 ---
 
-# Bitcoin's Journey Toward Thermal Stability
+\begin{center}
+\small Independent researcher \\
+Version 2.0 \textbullet{} April 2026
 
-### A Phenomenological Framework for Cycle-Aware Portfolio Allocation
-
-**Chris Imgraben** — Independent researcher
-**Version 2.0 · April 2026**
-
----
-
-## Abstract
-
-We present a deterministic, stateless framework for Bitcoin portfolio
-allocation that requires only a calendar date and the current spot price
-as inputs. The framework decomposes observed price into three layers: a
-**power-law equilibrium floor** calibrated to the full post-genesis price
-history, a **speculative envelope** whose amplitude decays geometrically
-with successive halving epochs following a Kleiber-like
-three-quarter-power scaling, and an **intra-cycle heartbeat pulse**
-modelled as a boundary-pinned asymmetric Gaussian peaking at
-one-third of each halving cycle. From these references we derive a
-position-in-band score, a cycle-phase penalty, and a bounded allocation
-signal in $[0, 1]$. On daily BTC/USD data from August 2011 through April
-2026 the framework captures approximately 95% of observations within its
-band and, at a 22% allocation-deviation rebalancing threshold, produces
-a strategy-to-HODL wealth ratio of 2.55$\times$ over the 2014--2026 window
-while reducing maximum drawdown from $-83\%$ to approximately $-50\%$. We
-stress that the framework is phenomenological, not first-principles: the
-physical and biological analogies are heuristic motivations for functional
-form, not derivations. We forecast that the power-law regime itself is
-time-limited and will transition to a logistic (S-curve) regime as
-Bitcoin's market capitalisation approaches planetary-scale boundaries
-such as the global monetary base or gold market capitalisation, with the
-expected transition window of 2029--2035.
-
-**Keywords:** Bitcoin, power law, portfolio allocation, rebalancing,
-Kleiber's Law, scaling, cycle analysis.
+\textbf{Keywords:} Bitcoin, power law, portfolio allocation, rebalancing, Kleiber's Law, scaling, cycle analysis
+\end{center}
 
 ---
 
@@ -646,33 +656,8 @@ errors are the author's.
 
 ## References
 
-- [@burger2019] Burger, H.C. (2019). *Bitcoin's natural long-term
-  power-law corridor of growth.* Medium.
-- [@burniske2018] Burniske, C. and Tatar, J. (2018). *Cryptoassets:
-  The Innovative Investor's Guide to Bitcoin and Beyond.* McGraw-Hill.
-- [@kelly1956] Kelly, J.L. (1956). A new interpretation of information
-  rate. *Bell System Technical Journal*, 35(4), 917--926.
-- [@kleiber1932] Kleiber, M. (1932). Body size and metabolism.
-  *Hilgardia*, 6(11), 315--353.
-- [@maclean2010] MacLean, L.C., Thorp, E.O. and Ziemba, W.T. (eds.)
-  (2010). *The Kelly Capital Growth Investment Criterion.* World
-  Scientific.
-- [@metcalfe1995] Metcalfe, R. (1995). Metcalfe's Law: A network
-  becomes more valuable as it reaches more users. *InfoWorld*, 17(40).
-- [@miller2010] Miller, M. (2010). Up the escalator, down the elevator
-  — market-wisdom idiom describing asymmetric price action.
-- [@nakamoto2008] Nakamoto, S. (2008). *Bitcoin: A Peer-to-Peer
-  Electronic Cash System.* Whitepaper.
-- [@santostasi2024] Santostasi, G. (2024). *The Bitcoin Power Law
-  Theory.* SSRN preprint.
-- [@sharpe1991] Sharpe, W.F. (1991). The arithmetic of active
-  management. *Financial Analysts Journal*, 47(1), 7--9.
-- [@sun2006] Sun, W., Fan, A., Chen, L-W., Schouwenaars, T. and
-  Albota, M.A. (2006). Optimal rebalancing for institutional
-  portfolios. *The Journal of Portfolio Management*, 32(2), 33--43.
-- [@west1999] West, G.B., Brown, J.H. and Enquist, B.J. (1999). The
-  fourth dimension of life: fractal geometry and allometric scaling of
-  organisms. *Science*, 284(5420), 1677--1679.
+::: {#refs}
+:::
 
 ---
 
