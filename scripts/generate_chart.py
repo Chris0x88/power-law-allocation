@@ -41,73 +41,108 @@ from power_law.model import (
 # DATA
 # ============================================================================
 
-def fetch_btc_history() -> pd.DataFrame:
-    """Fetch daily BTC/USD prices. Tries Binance BTCUSDT first, then Yahoo Finance."""
-    # Try Binance BTCUSDT (covers Aug 2017 onward, high quality daily closes)
-    try:
-        print("Fetching BTC history from Binance...")
-        start_ms = int(datetime(2017, 8, 1).timestamp() * 1000)
-        end_ms = int(datetime.now().timestamp() * 1000)
-        rows = []
-        cur = start_ms
-        while cur < end_ms:
-            r = requests.get(
-                "https://api.binance.com/api/v3/klines",
-                params={"symbol": "BTCUSDT", "interval": "1d",
-                        "startTime": cur, "limit": 1000},
-                timeout=15,
-            )
-            r.raise_for_status()
-            k = r.json()
-            if not k:
-                break
-            rows.extend(k)
-            cur = k[-1][0] + 1
-            time.sleep(0.15)
-        if rows:
-            df = pd.DataFrame(rows, columns=[
-                "ts", "open", "high", "low", "close", "volume",
-                "close_time", "qv", "trades", "tbbav", "tbqav", "ignore",
-            ])
-            df["date"] = pd.to_datetime(df["ts"], unit="ms")
-            df["price"] = df["close"].astype(float)
-            df = df.set_index("date")[["price"]]
-            print(f"  Binance: {len(df)} days from {df.index.min().date()} to {df.index.max().date()}")
+def _fetch_bitstamp(start: datetime, end: datetime) -> pd.DataFrame:
+    """Daily BTC/USD closes from Bitstamp (covers 2011-08 onward)."""
+    rows = []
+    step = 86400  # 1 day in seconds
+    cur = int(start.timestamp())
+    stop = int(end.timestamp())
+    while cur < stop:
+        r = requests.get(
+            "https://www.bitstamp.net/api/v2/ohlc/btcusd/",
+            params={"step": step, "limit": 1000, "start": cur},
+            timeout=20,
+        )
+        r.raise_for_status()
+        ohlc = r.json().get("data", {}).get("ohlc", [])
+        if not ohlc:
+            break
+        rows.extend(ohlc)
+        last_ts = int(ohlc[-1]["timestamp"])
+        if last_ts <= cur:
+            break
+        cur = last_ts + step
+        time.sleep(0.15)
+    if not rows:
+        return pd.DataFrame(columns=["price"])
+    df = pd.DataFrame(rows)
+    df["date"] = pd.to_datetime(df["timestamp"].astype(int), unit="s")
+    df["price"] = df["close"].astype(float)
+    return df.set_index("date")[["price"]]
 
-            # Top up pre-2017 from a tiny embedded set so the chart reaches back further
-            early = pd.DataFrame(
-                [
-                    ("2010-07-17", 0.05), ("2010-12-31", 0.30),
-                    ("2011-06-08", 31.9), ("2011-12-31", 4.72),
-                    ("2012-06-30", 6.60), ("2012-12-31", 13.45),
-                    ("2013-04-10", 259.0), ("2013-11-30", 1132.0), ("2013-12-31", 754.0),
-                    ("2014-06-30", 633.0), ("2014-12-31", 320.0),
-                    ("2015-06-30", 263.0), ("2015-12-31", 430.0),
-                    ("2016-06-30", 638.0), ("2016-12-31", 963.0),
-                    ("2017-06-30", 2474.0), ("2017-07-31", 2870.0),
-                ],
-                columns=["date", "price"],
-            )
-            early["date"] = pd.to_datetime(early["date"])
-            early = early.set_index("date")
-            return pd.concat([early, df]).sort_index()
+
+def _fetch_binance(start: datetime, end: datetime) -> pd.DataFrame:
+    """Daily BTCUSDT closes from Binance (covers 2017-08 onward)."""
+    rows = []
+    cur = int(start.timestamp() * 1000)
+    stop = int(end.timestamp() * 1000)
+    while cur < stop:
+        r = requests.get(
+            "https://api.binance.com/api/v3/klines",
+            params={"symbol": "BTCUSDT", "interval": "1d", "startTime": cur, "limit": 1000},
+            timeout=15,
+        )
+        r.raise_for_status()
+        k = r.json()
+        if not k:
+            break
+        rows.extend(k)
+        cur = k[-1][0] + 1
+        time.sleep(0.15)
+    if not rows:
+        return pd.DataFrame(columns=["price"])
+    df = pd.DataFrame(rows, columns=[
+        "ts", "open", "high", "low", "close", "volume",
+        "close_time", "qv", "trades", "tbbav", "tbqav", "ignore",
+    ])
+    df["date"] = pd.to_datetime(df["ts"], unit="ms")
+    df["price"] = df["close"].astype(float)
+    return df.set_index("date")[["price"]]
+
+
+def fetch_btc_history() -> pd.DataFrame:
+    """Fetch clean daily BTC/USD prices from 2011 onward.
+
+    Stitches Bitstamp (2011-08 → 2017-07) with Binance BTCUSDT (2017-08 →
+    today). Both sources return daily closes, so the join is seamless.
+    """
+    frames: list[pd.DataFrame] = []
+
+    try:
+        print("Fetching 2011-2017 from Bitstamp...")
+        bs = _fetch_bitstamp(datetime(2011, 8, 18), datetime(2017, 8, 16))
+        if len(bs):
+            print(f"  Bitstamp: {len(bs)} days from {bs.index.min().date()} to {bs.index.max().date()}")
+            frames.append(bs)
+    except Exception as e:
+        print(f"  Bitstamp failed: {e}")
+
+    try:
+        print("Fetching 2017+ from Binance...")
+        bn = _fetch_binance(datetime(2017, 8, 17), datetime.now())
+        if len(bn):
+            print(f"  Binance: {len(bn)} days from {bn.index.min().date()} to {bn.index.max().date()}")
+            frames.append(bn)
     except Exception as e:
         print(f"  Binance failed: {e}")
 
-    # Fallback: yfinance
-    try:
-        print("Falling back to Yahoo Finance...")
-        import yfinance as yf
-        t = yf.Ticker("BTC-USD")
-        df = t.history(period="max", interval="1d")
-        if df.empty:
-            raise RuntimeError("empty")
-        df.index = df.index.tz_localize(None)
-        df = df.rename(columns={"Close": "price"})[["price"]]
-        return df
-    except Exception as e:
-        print(f"  Yahoo failed: {e}")
-    raise RuntimeError("Could not fetch BTC history from any source")
+    if not frames:
+        # Last-resort fallback
+        try:
+            print("Falling back to Yahoo Finance...")
+            import yfinance as yf
+            df = yf.Ticker("BTC-USD").history(period="max", interval="1d")
+            if df.empty:
+                raise RuntimeError("empty")
+            df.index = df.index.tz_localize(None)
+            return df.rename(columns={"Close": "price"})[["price"]]
+        except Exception as e:
+            print(f"  Yahoo failed: {e}")
+        raise RuntimeError("Could not fetch BTC history from any source")
+
+    joined = pd.concat(frames).sort_index()
+    joined = joined[~joined.index.duplicated(keep="last")]
+    return joined
 
 
 # ============================================================================
@@ -175,7 +210,7 @@ def render_hero(btc_df: pd.DataFrame, out_path: Path):
     apply_dark_style()
     fig, ax = plt.subplots(figsize=(16, 8.5), dpi=160)
 
-    start = datetime(2011, 1, 1)
+    start = datetime(2012, 1, 1)
     end = datetime(2034, 1, 1)
     dates, floor, ceil, model = compute_reference_lines(start, end, step_days=3)
 

@@ -30,7 +30,18 @@ the **phase of the halving cycle** determine your allocation:
 - In the post-peak cooldown zone → don't catch falling knives
 
 **Historical finding** (2014–2026 backtest): a 22% rebalance threshold
-converts this signal into **2.55× vs HODL** with just ~5 trades per year.
+converts this signal into **2.55× vs HODL** with just ~8 trades per year.
+
+### The one principle that matters
+
+> **Loose rebalancing is the profit driver.**
+> ~8 trades a year beats HODL. 1,000 trades a year loses to HODL.
+
+The strategy works because it trades rarely, absorbs big chunks of value
+during each cycle, and leaves the position alone in between. Every tighter
+threshold that has been backtested — 1%, 5%, 10%, 15% — produces *worse*
+returns, because fees, slippage, and tax drag eat the edge faster than
+noise-chasing can generate it. See [docs/REBALANCER.md](docs/REBALANCER.md).
 
 See **[docs/MODEL.md](docs/MODEL.md)** for the full math and
 **[docs/THESIS.md](docs/THESIS.md)** for why this is worth doing.
@@ -163,12 +174,42 @@ A single signal call returns everything a bot or UI needs:
 
 ---
 
+## How long this model lasts
+
+The power-law framework assumes Bitcoin is still in its volatile, cycle-
+dominated youth. It will not last forever.
+
+Every mature asset class — gold, equities, sovereign debt — eventually
+trades in an **exponential** growth regime, not a power-law one. Volatility
+compresses. Cycles smooth out. Price becomes a function of money supply and
+a modest real return.
+
+We expect Bitcoin to make the same transition once it has absorbed a
+critical mass of global wealth — acting as a slow anchoring system that
+either recapitalises the USD or replaces it as a reserve. At that point,
+the four-year halving rhythm stops mattering, the ceiling stops
+constraining, and a constant 80–100% allocation becomes the right answer.
+
+**Our horizon for this framework:**
+
+- **5 years minimum** — through ~2030. Cycle 5 should behave like prior
+  cycles, with visibly compressed amplitude consistent with Kleiber decay.
+- **5–10 years** — cycle amplitude keeps compressing. The model still wins,
+  by a smaller margin.
+- **Beyond 10 years** — probabilistically the cycle structure breaks. A
+  successor framework retires this one.
+
+See **[docs/THESIS.md](docs/THESIS.md)** for the full expected-lifespan and
+endgame analysis.
+
+---
+
 ## Status
 
 Research framework, v1.0. Public under MIT.
 
 This is not financial advice. The model makes a claim about Bitcoin's
 long-run structure; that claim may be wrong. See
-[docs/THESIS.md](docs/THESIS.md) for known failure modes.
+[docs/THESIS.md](docs/THESIS.md) for the full list of failure modes.
 
 — Chris Imgraben

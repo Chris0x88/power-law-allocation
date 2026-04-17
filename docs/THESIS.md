@@ -132,21 +132,94 @@ enough. It is locked. See [CONSTANTS.md](CONSTANTS.md).
 
 ---
 
-## Known failure modes
+## Expected lifespan — and the eventual end of this model
 
-The model is an empirical framework, not a theorem. It can fail.
+**The power-law framework will eventually break, on purpose, and that is
+not a bug.**
 
-1. **Cycle breakdown.** If the four-year halving rhythm stops mattering — for
-   example, because institutional flows dominate miner flows — the
-   heartbeat's timing is wrong.
-2. **Regime change.** A regulatory shock, protocol failure, or mass exit
-   would break the power-law floor. The model has no opinion on these.
-3. **Crowded trade.** If enough capital adopts this or similar models, the
-   reflexive accumulation at the floor and de-risking at the ceiling will
-   *become* the cycle, and the historical amplitude will compress. That is
-   survivable — the model still outperforms — but the 2.55× backtest edge
-   will shrink.
-4. **Persistent overshoot.** Nothing prevents price from spending multiple
+The entire model rests on one assumption: Bitcoin is still in its youth.
+It is small relative to global wealth, it is volatile, and its price is
+dominated by reflexive cycles of adoption and speculation. Those three
+conditions are what produce a power-law floor with repeated Kleiber-decaying
+spikes above it. Take any of them away, and the model stops describing the
+asset.
+
+We expect all three to go away — slowly, over many years, in the same
+order.
+
+### Where this is going
+
+Every major financial asset class that has reached maturity — gold,
+broad equities, sovereign debt — trades in an **exponential** growth
+regime, not a power-law regime. Volatility compresses. Cycles smooth.
+Price becomes a function of the money supply and a modest real return,
+rather than of speculative flows.
+
+We expect Bitcoin to make exactly this transition, once it has absorbed a
+critical mass of global wealth into its orbit. The mechanism is
+straightforward:
+
+1. As a larger fraction of wealth lives in BTC, marginal flows produce
+   smaller percentage moves. Volatility decays mechanically.
+2. Holders with longer time horizons replace speculators on the margin.
+   Leverage and perpetual funding become a smaller share of turnover.
+3. The asset starts to function as a settlement layer and collateral
+   base, not a bet. Its job changes.
+4. At that point the four-year halving rhythm stops mattering. There is
+   no "cycle" to heartbeat against — just a slow, steady, exponential
+   repricing against fiat debasement.
+
+The endgame, as we read it, is one of two scenarios:
+
+- **Recapitalisation.** Bitcoin anchors the dollar. The USD remains the
+  medium of exchange; BTC becomes the reserve underneath it, the way
+  gold once did. This is the less disruptive path.
+- **Transition.** Sovereign and corporate balance sheets migrate off
+  USD-denominated debt onto BTC-denominated rails. The USD survives as
+  a transactional layer; the store-of-value function decouples entirely.
+
+Either scenario produces the same allocation implication: **at some
+point in the next decade, a constant 80–100% BTC allocation becomes the
+right answer, and rebalancing stops adding value.** The model will quietly
+tell you this — the floor and the price will converge, position-in-band
+will sit at zero, and allocation will pin at 100%.
+
+### Our horizon for this model
+
+- **Five years at minimum** (through ~2030–2031). Cycle 5 (the current
+  cycle, post-2024 halving) should behave roughly like prior cycles,
+  with a visibly compressed ceiling consistent with Kleiber decay. The
+  model is calibrated for this.
+- **Five to ten years** (~2030–2035). We expect cycle amplitude to
+  continue compressing. The phase penalty becomes less important; the
+  floor boost does more of the work. The strategy should still win, by
+  a smaller margin.
+- **Beyond ten years.** Probabilistically, the cycle structure breaks.
+  Volatility drops below what the model was calibrated on. At that point,
+  this framework retires.
+
+**The right response when this model stops working is not to re-tune it.**
+The constants are locked precisely so we notice when it breaks rather than
+patching it into uselessness. When it breaks, a successor framework with a
+different thesis (probably: constant allocation, tuned to fiat debasement
+and real yields) will take over.
+
+---
+
+## Other known failure modes
+
+The model is an empirical framework, not a theorem. It can also fail in
+ways unrelated to the long-run exponential transition above.
+
+1. **Regime change.** A regulatory shock, protocol failure, or mass exit
+   would break the power-law floor in the short term. The model has no
+   opinion on these events.
+2. **Crowded trade.** If enough capital adopts this or similar models,
+   the reflexive accumulation at the floor and de-risking at the ceiling
+   will *become* the cycle, and the historical amplitude will compress
+   faster than predicted. That is survivable — the model still
+   outperforms — but the 2.55× backtest edge will shrink.
+3. **Persistent overshoot.** Nothing prevents price from spending multiple
    years above the ceiling. The model would sit in capital-protection mode
    during that period and under-allocate.
 

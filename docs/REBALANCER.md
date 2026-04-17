@@ -8,6 +8,33 @@ choice, and the reference implementation shipped in this repo.
 
 ---
 
+## 0. The one insight that actually matters
+
+> **Loose rebalancing is the profit driver.**
+> Fewer, bigger moves beats HODL. More, smaller moves does not.
+
+This is the single most important finding from the entire project, and it is
+also the most counter-intuitive. Every instinct — "stay on top of it,"
+"react quickly," "adjust constantly" — produces worse returns than doing
+almost nothing.
+
+The strategy works because it:
+
+- Trades **~8 times per year**, never more.
+- **Absorbs large value shifts** during each cycle — one decisive move
+  instead of twenty indecisive ones.
+- **Pays fees and taxes only at genuine turning points**, not on noise.
+- **Leaves the position alone** for 1–4 month stretches while the trend
+  does the work.
+
+Every time you're tempted to tighten the threshold, rebalance more often,
+or "just check on it" — that is the urge the strategy is specifically
+designed to suppress. The edge is in the restraint, not in the model.
+
+The rest of this document is the evidence for why that is true.
+
+---
+
 ## 1. The core loop
 
 On every tick (hourly, daily, weekly — your choice):
@@ -50,12 +77,38 @@ miss meaningful shifts. **22% is the empirical sweet spot.**
 - **Signal over noise.** Bitcoin's intraday and weekly moves are enormous.
   A 22% deviation in *allocation* (not price) only occurs after a
   meaningful multi-month structural shift in position-in-band.
-- **Fee amortisation.** At ~4 trades/year and 0.3% fees, total fee drag
-  is ~1.2%/year — trivial next to volatility.
+- **Fee amortisation.** At ~4–8 trades/year and 0.3% fees, total fee drag
+  is ~1–2%/year — trivial next to volatility.
 - **Tax efficiency.** In most jurisdictions, fewer trades = fewer taxable
   events = larger compounding base.
-- **Psychological coherence.** Four trades a year is something a human can
-  actually execute without second-guessing.
+- **Psychological coherence.** A handful of trades a year is something a
+  human can actually execute without second-guessing.
+
+### Why tight rebalancing destroys returns
+
+Look at the numbers again. A 1% threshold generated **1,123 trades** and
+still hit 1.84× vs HODL. A 22% threshold generated **48 trades** and hit
+2.55×. The 22% threshold did **70% better** with **96% fewer trades.**
+
+Where does that gap come from? Three compounding leaks:
+
+1. **Fee drag.** 1,100 trades at 0.3% each = ~330% of notional paid in
+   fees over 12 years. Even with position sizing, this compounds against
+   you every single year.
+2. **Noise-chasing.** Tight thresholds sell into minor rips and buy into
+   minor dips. Most minor moves reverse within days. You end up trading
+   against yourself.
+3. **Tax events.** Every sale is a realised gain in most jurisdictions.
+   A tight rebalancer is a tax-realisation machine; the after-tax
+   number is catastrophic.
+
+The right frame is **absorption**, not reaction:
+
+- The cycle will hand you one or two enormous structural shifts per year.
+- You rebalance **into** those shifts.
+- In between, you do nothing.
+
+That is what 8 trades/year looks like. That is why it wins.
 
 See [BACKTEST.md](BACKTEST.md) for the fee-sensitivity matrix and walk-forward
 validation.
